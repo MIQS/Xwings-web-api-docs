@@ -41,14 +41,9 @@ bestBid        | DoubleString   | M           |
 bestAsk        | DoubleString   | M           | 
 24hHigh        | DoubleString   | M           | 
 24hLow         | DoubleString   | M           | 
-24hVolume      | LongString     | M           | 
+24hVolume      | DoubleString     | M           | 
 24hChange      | DoubleString   | M           | 
 
-
-### Failure Error Codes
-
-Error Code            | Description
-----------------------| -----------------
 
 
 <a name="order-book-1" id="order-book-1"> </a>
@@ -91,10 +86,6 @@ asks           | Array of [price, size, numOfOrders]    | The aggregated size fo
 The initial bids and asks contain the full depth that the user
 subscribes for. The subsequent messages only contain the updates.
 
-### Failure Error Codes
-
-Error Code            | Description
-----------------------| -----------------
 
 
 <a name="full-order-book-channel" id="full-order-book-channel"> </a>
@@ -147,10 +138,6 @@ Sequence to process full order book:
 
 4.  Apply the update to orderbook
 
-### Failure Error Codes
-
-Error Code            | Description
-----------------------| --------------
 
 
 <a name="trade-1" id="trade-1"> </a>
@@ -190,11 +177,6 @@ price     | DoubleString    | M           |
 size      | DoubleString    | M           | 
 side      | String          | M           | Buy/Sell
 
-
-### Failure Error Codes
-
-Error Code            | Description
-----------------------| --------------
 
 
 <a name="charts-1" id="charts-1"> </a>
@@ -238,9 +220,3 @@ volume        | String        | M           |
 
 The first charts message will contain the array of historical data
 entries with the size of 60.
-
-### Failure Error Codes
-
-Error Code            | Description
-----------------------| --------------
-
