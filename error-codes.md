@@ -1,42 +1,50 @@
 # Error Codes
 
-Error Code                      | Description
-------------------------------- | ---------------------------------------
-INVALID_API_KEY                 | Invalid API key
-INVALID_SIGNATURE               | Invalid signature
-TOO_MANY_REQUESTS               | Too many request sent
-UNKNOWN_FIELD                   | API request contains unknown fields
-FIELD_IS_REQUIRED               | Missing mandatory field in the request
-INVALID_FIELD_VALUE             | Invalid field value
-WRONG_FIELD_TYPE                | Wrong field type provided in the request
-INTERNAL_ERROR                  | Internal system error
-USER_INVALID_USERNAME           | The user name provided is invalid.
-USER_BAD_PASSWORD               | Bad password
-USER_BAD_OLD_PASSWORD           | Bad old password provided
-USER_PASSWORD_NOT_MATCH         | User name and password do not match system's record
-USER_INVALID_EMAIL              | Invalid email
-USER_USERNAME_IN_USE            | Username is already in use
-USER_EMAIL_IN_USE               | The email provided has been used.
-USER_EMAIL_REGISTERED_NON_ACTIVE| The email has been registered, but has not been activated
-USER_REGISTER_FAILED            | User registration failed
-USER_FAIL_TO_SEND_EMAIL         | Fail to send email
-USER_INVALID_CONFIRM_CODE       | Invalid confirmation code provided
-USER_CONFIRM_REGISTER_FAILED    | Fail to confirm user registration
-USER_DISABLED                   | User disabled
-USER_INVALID_TOKEN              | Invalid token
-INVALID_INSTRUMENT_ID           | Invalid instrument
-INVALID_PRODUCT_TYPE            | Invalid product type
-INVALID_SYMBOL                  | Invalid symbol
-INVALID_QUOTE_CURRENCY          | Invalid quote currency
-INVALID_USER_ACCOUNT            | Invalid user account
-EXCEED_AVAILABLE_BALANCE        | Order exceeds the available balance
-CLIENT_ORDER_ID_EXISTS          | Client order id provided already exists
-INSTRUMENT_IS_DISABLED          | Instrument is disabled, no trading is allowed
-BELOW_MIN_ORDER_SIZE            | Order size is below minimum order size of the instrument
-EXCEED_MAX_ORDER_SIZE           | Order size exceeds max order size for the instrument
-INVALID_LOT_SIZE                | Order size contains invalid lot size
-ORDER_NOT_EXIST                 | Order id does not exist in the system
-
+Error Code                              | Description
+----------------------------------------| ---------------------------------------
+EXCEED_BALANCE                          | Insufficient balance for the new order.
+ALREADY_DONE                            | The order is already cancelled or fully filled.
+ALREADY_PENDING_CANCEL                  | The order is already in pending cancel state.
+INVALID_INSTRUMENT                      | The instrumentId is invalid or has been disabled
+SIZE_LESS_THAN_MIN_SIZE                 | The order size is less than the minOrderSize of the instrument.
+SIZE_MORE_THAN_MAX_SIZE                 | The order size is more than the maxOrderSize of the instrument.
+SIZE_NOT_DIVISIBLE_BY_LOT_SIZE          | The order size is either too high or too low and not in the multiples of the instrument.
+PRICE_NOT_DIVISIBLE_BY_TICK_SIZE        | The order price is not divisible by the tickSize of the instrument.
+INVALID_ORDER_SIDE                      | The side is invalid.
+INVALID_ORDER_STATUS                    | The orderStatus is invalid.
+UNIQUE_ORDER_ID_REQUIRED                | Neither orderId nor clientOrderId is provided.
+INVALID_INSTRUMENT_STATUS               | Request is not allowed in current instrument status.
+QUOTE_AMOUNT_REQUIRED                   | The orderType is MARKET and side is BUY but quoteAmount is not provided.
+SIZE_REQUIRED                           | The orderType is MARKET and side is SELL but size is not provided.
+PRICE_LESS_THAN_MIN_PRICE               | The order price is less than the minOrderPrice of the instrument.
+PRICE_MORE_THAN_MAX_PRICE               | The order price is more than the maxOrderPrice of the instrument.
+API_BAD_REQUEST,                        | Bad request that contains either invalid fields or invalid field values
+INTERNAL_SERVER_ERROR,                  | Internal server error.
+API_CALL_UNAUTHORIZED,                  | The api call is not authenticated.
+INVALID_EMAIL_FORMAT,                   | The email provided by the user is valid.
+INVALID_USERNAME_FORMAT,                | The user name provided by the user is invalid.
+INVALID_REGISTRATION_CONFIRMATION_CODE, | User invalid confirm code.
+INVALID_OLD_PASSWORD,                   | The password provided by user to reset password is invalid.
+BAD_PASSWORD,                           | Password format dosen't meet the requirement.
+EMAIL_IN_USE,                           | The email is registered by other user.
+USERNAME_IN_USE,                        | The username is registered by other user.
+USER_REGISTRATION_UNCONFIRMED,          | The user has registered but not confirmed.
+USER_REGISTRATION_HAS_BEEN_CONFIRMED,   | The user has been confirmed already.
+USER_DISABLED,                          | The user is disabled.
+USER_AUTH_BAD_CREDENTIALS,              | The credentials provided by user is invalid.
+PASSWORD_SAME_TO_PREVIOUS,              | Cannot set the password same to previous.
+USER_NOT_EXIST,                         | Can't find the user with the auth token.
+INVALID_USERACCOUNT_NAME_FORMAT,        | The user account name provided by user is invalid.
+USERACCOUNT_NAME_IN_USE,                | The user account name has been taken.
+USER_MAIN_ACCOUNT_DELETE_NOT_ALLOWED,   | Cannot delete the user main account.
+USER_MAIN_ACCOUNT_HAS_EXISTED,          | Cannot create user main account cause the user already has one.
+USERACCOUNT_DELETE_NOT_ALLOW,           | User account deletion is not allowed.
+USERACCOUNT_DISABLED,                   | The user account is disabled.
+USERACCOUNT_NOT_EXIST,                  | Can't find the user account with the provided credentials. 
+APIKEY_NOT_EXIST,                       | Cannot find the apikey with the provided credentials.
+APIKEY_DISABLED,                        | The apikey is disabled.
+BAD_PASSCODE,                           | The apikey passcode is invalid.
+INVALID_AUTHORITIES                     | The apikey authorities is invalid.
 
 
 

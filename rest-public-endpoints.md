@@ -2,25 +2,26 @@
 
 * [Instruments](#instruments)
 * [Ticker](#ticker)
-* [Order Book](#order-book)
+* [Order Book](#orderBook)
 * [Trades](#trades)
 * [Charts](#charts)
+* [Time](#time)
 
 <a name="instruments" id="instruments"> </a>
 
-
+---
 ## Instruments
 
-GET /api/public/instruments
+    GET /instruments
 
 ### Request Parameters
 
 Name                  | Type(value)      | Mandatory   | Description
 ----------------------| -----------------|-------------|-----------------------
 instrumentId          | String           | O           | 
-productType           | String           | O           | Spot/Futures/Indexes
-symbol                | String           | O           | 
-quoteCurrency         | String           | O           | 
+instrumentType        | Enum             | O           |
+asset                 | String           | O           |
+quoteAsset            | String           | O           |
 underlying            | String           | O           | 
 
 ### Success Response Body Fields
@@ -28,27 +29,23 @@ underlying            | String           | O           |
 Name               | Type(value)      | Mandatory   | Description
 -------------------| -----------------|-------------|-----------------------
 instrumentId       | String           | M           | e.g. BTCUSD
-symbol             | String           | M           | e.g. BTC
-quoteCurrency      | String           | M           | e.g. USD
-productType        | String           | M           | Spot/Futures/Indexes
-tickSize           | DoubleString     | M           | e.g. 0.01
-lotSize            | Integer          | (M)         | Mandatory for tradable Spot and Futures instruments e.g. 1
-minOrderSize       | DoubleString     | (M)         | Mandatory for tradable Spot and Futures instruments
-maxOrderSize       | DoubleString     | (M)         | Mandatory for tradable Spot and Futures instruments
-expiry             | Timestamp        | (M)         | Mandatory for futures instrument
-underlying         | String           | (M)         | Mandatory for futures instrument
-contractMultipler  | Integer          | (M)         | Mandatory for futures instrument
+asset              | String           | M           | e.g. BTC
+quoteAsset         | String           | M           | e.g. USD
+instrumentType     | Enum             | M           | 
+tickSize           | DoubleString     | M           | price increment
+lotSize            | DoubleString     | M           | size increment
+minOrderPrice      | DoubleString     | M           | 
+maxOrderPrice      | DoubleString     | M           | 
+minOrderSize       | DoubleString     | M           | 
+maxOrderSize       | DoubleString     | M           | 
+expiry             | Timestamp        | (M)         | Mandatory for FUTURES instrument
+underlying         | String           | (M)         | Mandatory for FUTURES instrument
+contractMultiplier | Integer          | (M)         | Mandatory for FUTURES instrument
 
-
-### Failure Error Codes
-
-Error Code            | Description                  
-----------------------| ---------------------------------
-
-
+---
 ## Ticker
 
-GET /api/public/ticker
+    GET /ticker
 
 ### Request Parameters
 
@@ -58,10 +55,10 @@ instrumentId       | String           | M           | e.g. “BTCUSD”
 
 ### Success Response Body Fields
 
-Name            | Type(value)      | Mandatory   | Description
-----------------| -----------------|-------------|-----------------------
-instrumentId    | String           | M           | e.g. “BTCUSD”
-time            | Timestamp        | M           | 
+Name             | Type(value)      | Mandatory   | Description
+-----------------| -----------------|-------------|-----------------------
+instrumentId     | String           | M           | e.g. “BTCUSD”
+lastModifiedTime | Timestamp        | M           | 
 lastPrice       | DoubleString     | M           | 
 bestBid         | DoubleString     | M           | 
 bestAsk         | DoubleString     | M           | 
@@ -70,17 +67,12 @@ bestAsk         | DoubleString     | M           |
 24hVolume       | LongString       | M           | 
 24hChange       | DoubleString     | M           | 
 
-### Failure Error Codes
-
-Error Code            | Description                  
-----------------------| ---------------------------------
-
-<a name="order-book" id="order-book"> </a>
-
+---
+<a name="orderBook" id="orderBook"> </a>
 
 ## Order Book
 
-GET /api/public/orderbook
+    GET /orderbook
 
 ### Request Parameters
 
@@ -91,26 +83,23 @@ level           | Integer          | M           | 1 - top bid and ask;2 – ord
 
 ### Success Response Body Fields
 
-Name            | Type(value)                                   | Mandatory   | Description
-----------------| ----------------------------------------------|-------------|-----------------------
-instrumentId    | String                                        | M           | 
-level           | 1/2/3                                         | M           | 
+Name               | Type(value)                                   | Mandatory   | Description
+-------------------| ----------------------------------------------|-------------|-----------------------
+instrumentId       | String                                        | M           |
+lastModifiedTime   | Timestamp                                     | M           | 
+level           | Integer                                       | M           | 1/2/3
 sequence        | LongString                                    | M           | 
 bids            | Array of [price, size, numOfOrders/orderId]   | M           | Level 1 – This is one sized array;Level 2 – The aggregated size for each price level is returned with numOfOrders count for the price;Level 3 – The order level information is returned
 asks            | Array of [price, size, numOfOrders/orderId]   | M           | Level 1 – This is one sized array;Level 2 – The aggregated size for each price level is returned with numOfOrders count for the price;Level 3 – The order level information is returned
 
-
-### Failure Error Codes
-
-Error Code            | Description                  
-----------------------| ---------------------------------
-
+---
 <a name="trades" id="trades"> </a>
-
 
 ## Trades
 
-GET /api/public/trades
+    GET /trades
+    
+Returns most recent trades in an array.
 
 ### Request Parameters
 
@@ -118,27 +107,24 @@ Name            | Type(value)      | Mandatory   | Description
 ----------------| -----------------|-------------|-----------------------
 instrumentId    | String           | M           | 
 
-### Success Response Body Fields
+### Success Response Body Array Json Fields
 
-Name      | Type(value)      | Mandatory   | Description
-----------| -----------------|-------------|-----------------------
-time      | Timestamp        | M           | 
+Name            | Type(value)      | Mandatory   | Description
+----------------| -----------------|-------------|-----------------------
+instrumentId    | String           | M           |
+createdTime     | Timestamp        | M           | 
 tradeId   | String           | M           | 
 price     | DoubleString     | M           | 
 size      | DoubleString     | M           | 
-side      | String           | M           | Buy/Sell
+side      | Enum             | M           |
 
-### Failure Error Codes
-
-Error Code            | Description                  
-----------------------| ---------------------------------
 
 <a name="charts" id="charts"> </a>
 
-
+---
 ## Charts
 
-GET /api/public/charts
+    GET /charts
 
 It returns an array of data point stats.
 
@@ -155,6 +141,7 @@ granularity   | Integer         | M           | In seconds; 60/300/900/3600/2160
 
 Name          | Type(value)     | Mandatory   | Description
 --------------| ----------------|-------------|-----------------------
+lastModifiedTime     | Timestamp       | M           |
 startTime     | Timestamp       | M           | 
 endTime       | Timestamp       | M           | 
 openPrice     | String          | M           | 
@@ -163,10 +150,11 @@ low           | String          | M           |
 high          | String          | M           | 
 volume        | String          | M           | 
 
-### Failure Error Codes
+<a name="time" id="time> </a>
 
-Error Code            | Description                  
-----------------------| ---------------------------------
-
-<a name="private-endpoints" id="private-endpoints"> </a>
-
+---
+## Time
+   
+    GET /time
+   
+It returns the server time in decimal seconds since Unix Epoch
