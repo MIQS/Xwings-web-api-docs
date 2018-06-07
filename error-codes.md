@@ -21,6 +21,7 @@ PRICE_MORE_THAN_MAX_PRICE               | The order price is more than the maxOr
 API_BAD_REQUEST,                        | Bad request that contains either invalid fields or invalid field values
 INTERNAL_SERVER_ERROR,                  | Internal server error.
 API_CALL_UNAUTHORIZED,                  | The api call is not authenticated.
+TWO_FACTOR_UNAUTHORIZED,                | Need two factor authentication.
 INVALID_EMAIL_FORMAT,                   | The email provided by the user is valid.
 INVALID_USERNAME_FORMAT,                | The user name provided by the user is invalid.
 INVALID_REGISTRATION_CONFIRMATION_CODE, | User invalid confirm code.

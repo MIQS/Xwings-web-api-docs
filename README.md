@@ -1,4 +1,4 @@
-# Digital Asset Exchange Solution Web API
+# Bitcoin Exchange Solution Web API
 
 The Secure Web APIs are designed to allow client applications to view and update data using the HTTPS(rest) and WSS(websocket)
 protocol over the internet. The purpose of this document is to provide the urls and the specification of the messages
@@ -36,7 +36,6 @@ All messages are in json format.
 
 Type         | Description
 ------------ | ------------
-Timestamp    | All timestamps from API are returned in ISO 8601 with microseconds e.g 2018-03-01T10:00:00.123456Z
 Integer      | Integer numbers
 Long         | Long numbers
 Boolean      | True/False
@@ -44,10 +43,14 @@ DoubleString | Decimal numbers are returned as strings to preserve full precisio
 Enum         | Enum definition.  Passing invalid enum values will result in API_BAD_REQUEST error
 String       | Text
 
+### Timestamp
+
+Unless otherwise specified, all timestamps returned from API are milliseconds since UNIX Epoch.
+
 ### Mandatory Field Indicators
 
 Indicator    | Description
------------- | ------------
+------------ | ----------------------------------------
 M            | Mandatory field
 (M)          | Mandatory field under certain conditions
  O           | Optional field

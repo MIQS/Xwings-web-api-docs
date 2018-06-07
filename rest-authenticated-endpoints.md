@@ -65,7 +65,6 @@ Data is returned in descending order of **lastModifiedTime**. Newest modified or
 
 Name           | Type(value)                                 | Mandatory   | Description
 ---------------| --------------------------------------------|-------------|-------------------------------------------------------
-orderId        | String                                      | O           |
 instrumentId   | String                                      | O           | If not provided, orders for all symbols are returned
 pageNumber     | Integer                                     | O           | If not provided, it will use default page number
 pageSize       | Integer                                     | O           | If not provided, it will use default page size
@@ -83,19 +82,17 @@ count        | Integer          | M         |
 Name                  | Type(value)                      | Mandatory   | Description
 ----------------------| ---------------------------------|-------------|-------------------------------------------------------------------------------
 orderId               | String                           | M           |
-lastModifiedTime      | Timestamp                        | M           | Timestamp of the last update on this order
+lastModifiedTime      | Long                             | M           | last update time on this order
 instrumentId          | String                           | M           |
-userAccount           | String                           | M           | User may have multiple accounts.
 orderType             | Enum                             | M           | 
 price                 | DoubleString                     | M           |
 size                  | DoubleString                     | M           |
 side                  | Enum                             | M           | 
 timeInForce           | Enum                             | M           | 
-createdTime           | Timestamp                        | M           | When the order was accepted
+createdTime           | Long                             | M           | When the order was accepted
 stopPrice             | DoubleString                     | O           |
 orderStatus           | Enum                             | M           | 
-executedSize          | DoubleString                     | O           |
-executedPrice         | DoubleString                     | O           |
+avgExecutedPrice      | DoubleString                     | O           | Average executed prices of all fills in this order 
 totalExecutedSize     | DoubleString                     | O           |
 selfTradePrevention   | Enum                             | M           | 
 clientOrderId         | String                           | O           |
@@ -134,20 +131,18 @@ count        | Integer          | M         |
 Name                  | Type(value)                      | Mandatory   | Description
 ----------------------| ---------------------------------|-------------|-------------------------------------------------------------------------------
 orderId               | String                           | M           | 
-lastModifiedTime      | Timestamp                        | M           | Timestamp of the last update on this order
+lastModifiedTime      | Long                             | M           | Timestamp of the last update on this order
 instrumentId          | String                           | M           | 
-userAccount           | String                           | M           | User may have multiple accounts.
 orderType             | Enum                             | M           |
 price                 | DoubleString                     | M           | 
 size                  | DoubleString                     | M           | 
 side                  | Enum                             | M           |
 timeInForce           | Enum                             | M           |
-createdTime           | Timestamp                        | M           | When the order was accepted
+createdTime           | Long                             | M           | When the order was accepted
 stopPrice             | DoubleString                     | O           | 
 orderStatus           | Enum                             | M           |
-executedSize          | DoubleString                     | O           | 
-executedPrice         | DoubleString                     | O           | 
-totalExecutedSize     | DoubleString                     | O           | 
+avgExecutedPrice      | DoubleString                     | O           | Average executed price of all fills in this order
+totalExecutedSize     | DoubleString                     | O           | Total executed size
 selfTradePrevention   | Enum                             | M           | Default - CO
 clientOrderId         | String                           | O           | 
 
@@ -166,7 +161,6 @@ Returns an array of fills; Pagination is supported. Data is returned in descendi
 
 Name          | Type(value)  | Mandatory | Description          
 --------------| -------------| ----------| ----------------------------------------------------
-orderId       | String       | O         | 
 instrumentId  | String       | O         | If not provided, fills for all instruments are returned
 pageNumber    | Integer      | O         | If not provided, it will use default page number of 1
 pageSize      | Integer      | O         | If not provided, it will use default page size of 100
@@ -182,11 +176,10 @@ count        | Integer          | M         |
 ### Record Fields  
 Name          | Type(value)  | Mandatory | Description
 --------------| -------------| ----------| ---------------------------------------
-createdTime   | Timestamp    | M         | When the fill occured
+createdTime   | Long         | M         | When the fill occured
 tradeId       | String       | M         |
 orderId       | String       | M         | 
 instrumentId  | String       | M         | 
-userAccount   | String       | M         |
 side          | Enum         | M         |
 price         | DoubleString | M         |
 size          | DoubleString | M         |
@@ -233,13 +226,13 @@ Name                  | Type(value)        | Mandatory | Description
 ----------------------| -------------------| ----------| ----------------------------------------------------
 clientOrderId         | String             | (M)       | Mandatory if clientOrderId is provided by the user
 orderId               | String             | M         | System generated unique order id
-timestamp             | Timestamp          | M         | Time when the order is accepted with order status of PENDING_NEW
+timestamp             | Long               | M         | Time when the order is accepted with order status of PENDING_NEW
 
 
 <a name="cancelOrder" id="cancelOrder"> </a>
 
 ---
-## Cancel Order
+## Cancel Order 
 
     POST /cancelOrder
 
@@ -256,12 +249,12 @@ Name               | Type(value)       | Mandatory | Description
 -------------------| ------------------| ----------| ----------------------------------------
 orderId            | String            | M         | 
 clientOrderId      | String            | (M)       | Mandatory if clientOrderId is provided
-timestamp          | Timestamp         | M         | When the cancel is accepted and order status is updated to PENDING_CANCEL
+timestamp          | Long              | M         | When the cancel is accepted and order status is updated to PENDING_CANCEL
 
 <a name="cancelAllOrders" id="cancelAllOrders"> </a>
 
 ---
-## Cancel All Order
+## Cancel All Order 
 
     POST /cancelAllOrders
 
@@ -290,18 +283,17 @@ orderIds           | Array of Strings  | M         | Orders that are being cance
 
 Name             | Type(value)   | Mandatory | Description
 -----------------| --------------| ----------| ---------------------------------------------------
-accountId        | String        | M         | 
 asset            | String        | M         |
 balance          | DoubleString  | M         | Remaining balance in the asset
 available        | DoubleString  | M         | available balance = balance - outstanding order size - outstanding withdraw request size
-lastModifiedTime | Timestamp     | M         | 
+lastModifiedTime | Long          | M         | 
 
 <a name="accountTransactions" id="accountTransactions"> </a>
 
 ---
-## Account Transactions
+## Account Transactions (not implemented)
 
-    GET /accountTransactions
+    GET /accountHistory
     
     Weight: 5
 
@@ -311,25 +303,22 @@ account balance and available balance. Pagination is supported.
 ### Request Parameters
 
 Name            | Type(value)   | Mandatory | Description
-----------------| --------------| ----------| -------------------
-accountId       | String        | O         | 
-transactionType | Enum          | O         |
+----------------| --------------| ----------| ----------------------------------------
+asset           | String        | O         | Return recent transactions for all assets
 referenceId     | String        | O         | 
 
 ### Success Response Body Array Json Fields
 
 Name              | Type(value)   | Mandatory | Description
-------------------| --------------| ----------| -------------------
+------------------| --------------| ----------| ------------------------------------------------------------
 transactionId     | String        | M         | 
-userAccount       | String        | M         | 
-accountId         | String        | M         | 
 asset             | String        | M         |
 transactionType   | Enum          | M         |
-amount            | DoubleString  | M         | 
+amount            | DoubleString  | M         | Amount change triggered by the transaction.
 balance           | DoubleString  | M         | 
 available         | DoubleString  | M         | 
-createdTime       | Timestamp     | M         | 
-referenceId       | String        | M         | Description;Trade – {tradeId};Withdraw – {withdrawId};Fee – {tradeId or withdrawId};Order – {orderId};WithdrawRequest – {withdrawId}
+createdTime       | Long          | M         | 
+referenceId       | String        | M         | Reference id associated with the transaction.  TRANSFER(txId) TRADE{tradeId) TRADE_FEE(tradeId) TRANSFER_FEE(txId) 
 
 
 <a name="withdraw" id="withdraw"> </a>
@@ -342,8 +331,8 @@ referenceId       | String        | M         | Description;Trade – {tradeId};
 ### Request Parameters
 
 Name            | Type(value)   | Mandatory | Description
-----------------| --------------| ----------| -------------------
-accountId       | String        | M         | 
+----------------| --------------| ----------| ------------------- 
+asset           | String        | M         | 
 amount          | String        | M         | 
 address         | String        | M         | bankId or cryto address
 
@@ -352,4 +341,4 @@ address         | String        | M         | bankId or cryto address
 Name            | Type(value)   | Mandatory | Description
 ----------------| --------------| ----------| -------------------
 withdrawId      | String        | M         | 
-timestamp       | Timestamp     | M         | When the withdraw request was accepted
+timestamp       | Long          | M         | When the withdraw request was accepted
