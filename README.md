@@ -1,4 +1,4 @@
-# Bitcoin Exchange Solution Web API
+# Xwings - Digital Asset Exchange Solution
 
 The Secure Web APIs are designed to allow client applications to view and update data using the HTTPS(rest) and WSS(websocket)
 protocol over the internet. The purpose of this document is to provide the urls and the specification of the messages
