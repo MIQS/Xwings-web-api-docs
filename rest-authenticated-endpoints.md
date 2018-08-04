@@ -96,6 +96,7 @@ avgExecutedPrice      | DoubleString                     | O           | Average
 totalExecutedSize     | DoubleString                     | O           |
 selfTradePrevention   | Enum                             | M           | 
 clientOrderId         | String                           | O           |
+fee                   | DoubleString                     | O           |
 
 <a name="allOrders" id="allOrders"> </a>
 
@@ -145,6 +146,7 @@ avgExecutedPrice      | DoubleString                     | O           | Average
 totalExecutedSize     | DoubleString                     | O           | Total executed size
 selfTradePrevention   | Enum                             | M           | Default - CO
 clientOrderId         | String                           | O           | 
+fee                   | DoubleString                     | O           |
 
 <a name="fills" id="fills"> </a>
 
@@ -183,6 +185,7 @@ instrumentId  | String       | M         |
 side          | Enum         | M         |
 price         | DoubleString | M         |
 size          | DoubleString | M         |
+fee           | DoubleString | M         |
 
 
 <a name="newOrder" id="newOrder"> </a>
@@ -291,7 +294,7 @@ lastModifiedTime | Long          | M         |
 <a name="accountTransactions" id="accountTransactions"> </a>
 
 ---
-## Account Transactions (not implemented)
+## Account Transactions
 
     GET /accountHistory
     

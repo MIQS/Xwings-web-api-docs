@@ -5,7 +5,9 @@
 * [New Order](#newOrder)
 * [Cancel Order](#cancelOrder)
 
-In order to receive the data on authenticated channels, the websocket session needs to be authenticated.  
+In order to receive the data on authenticated channels, the websocket session needs to be authenticated first
+by calling authenticate.
+
 All requests need to provide the request time in seconds and must be within 5 seconds of the server time 
 or your request will be considered expired and rejected.  To change 5 second expiry, user can set **expiry**
 to the desired seconds.
@@ -45,7 +47,6 @@ userMessageId   | Integer                        | (M)         | Mandatory if us
 Name                       | Type(value)                    | Mandatory   | Description
 ---------------------------| -------------------------------| ------------|--------------------
 type                       | subscribe                      | M           | Subscribe/Unsubscribe message type
-timestamp                  | Long                           | M           | current time in milliseconds from UNIX EPOCH
 channel                    | orderUpdate                    | M           | 
 instrumentIds              | Array of instrumentId Strings  | O           | Subscribe/Unsubscribe all instruments by default
 numberOfSnapshotRecords    | Integer                        | O           | Max recent number of open orders returned. All open orders will be returned if not specified.
@@ -88,6 +89,7 @@ postLiquidity        | Boolean                                   | O           |
 selfTradePrevention  | Enum                                      | M           |
 clientOrderId        | String                                    | O           | 
 cancelReason         | Enum                                      | O           | Provided when order is cancelled
+fee                  | DoubleString                              | O           | Available when the current update is a trade
 
 <a name="accountUpdate" id="accountUpdate"> </a>
 
@@ -99,7 +101,6 @@ cancelReason         | Enum                                      | O           |
 Name                         | Type(value)                    | Mandatory   | Description
 -----------------------------| -------------------------------| ------------|--------------------
 type                         | subscribe                      | M           | Subscribe/Unsubscribe message type
-timestamp                    | Long                           | M           | current time in milliseconds from UNIX EPOCH
 channel                      | accountUpdate                  | M           | 
 assets                       | Array of asset Strings         | O           | Subscribe for all currencies by default
 userMessageId                | Integer                        | O           | Unique message id for this websocket session
@@ -165,4 +166,3 @@ timestamp              | Long                 | M           | current time in mi
 orderId                | String               | (M)         | 
 clientOrderId          | String               | (M)         | 
 userMessageId          | Integer              | O           | Unique message id for this websocket session
-

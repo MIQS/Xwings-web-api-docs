@@ -97,14 +97,16 @@ userMessageId  | Integer                        | O           | Unique message i
 
 ### Response Fields
 
-Name           | Type(value)                    | Mandatory   | Description
----------------| -------------------------------|-------------|----------------
-type           | subscribed/unsubscribed        | M           | Subscribe/Unsubscribe message type
-channel        | orderBook                      | M           | 
-timestamp      | Long                           | M           | When subscription request was accepted
-depth          | Integer                        | M           | 
-instrumentIds  | Array of instrumentId Strings  | M           | 
-userMessageId  | Integer                        | (M)         | Mandatory if userMessageId is provided in the user request
+Name           | Type(value)                         | Mandatory   | Description
+---------------| ------------------------------------|-------------|----------------
+type           | subscribed/unsubscribed             | M           | Subscribe/Unsubscribe message type
+channel        | orderBook                           | M           | 
+timestamp      | Long                                | M           | When subscription request was accepted
+depth          | Integer                             | M           | 
+instrumentId   | instrumentId String                 | M           | 
+bids           | Array of [price, size, numOfOrders] | M           | Snapshot of bids with the aggregated size for each price level
+asks           | Array of [price, size, numOfOrders] | M           | Snapshot of asks with the aggregated size for each price level
+userMessageId  | Integer                             | (M)         | Mandatory if userMessageId is provided in the user request
 
 
 ### Channel Fields
@@ -114,45 +116,9 @@ Name           | Type(value)                        |  Mandatory  | Description
 type           | orderBook                          | M           |
 timestamp      | Long                               | M           | order book update time
 instrumentId   | String                             | M           |
-bids           | Array of [price, size, numOfOrders]| M           | The aggregated size for each price level is returned with numOfOrders count for the price
-asks           | Array of [price, size, numOfOrders]| M           | The aggregated size for each price level is returned with numOfOrders count for the price
+bids           | Array of [price, size, numOfOrders]| M           | Update of bids with the aggregated size for the updated price level
+asks           | Array of [price, size, numOfOrders]| M           | Update of asks with the aggregated size for the updated price level
 
-
-The initial bids and asks contain the full depth that the user
-subscribes for. The subsequent messages only contain the updates.
-
-### Sample Data
-
-```javascript
-//request
-{
-    type: "subscribe",
-    channel: "orderBook",
-    instrumentIds: ["ETHBTC", "XRPBTC"],
-    userMessageId: 100
-}
-//response
-{
-    type: "subscribed",
-    channel: "ticker",
-    timestamp: "1528087297438",
-    instrumentIds: ["ETHBTC", "XRPBTC"],
-    userMessageId: 100
-}
-//update
-{
-    type: "ticker",
-    timestamp: "1528087297439",
-    instrumentId: "ETHBTC",
-    lastPrice: "0.0837",
-    bestBid: "0.0836",
-    bestAsk: "0.0838",
-    24hHigh: "0.0901",
-    24hLow: "0.0830",
-    24hVolume: "12.243",
-    24hChange: "0.003"
-}
-```
 
 <a name="fullOrderBook" id="fullOrderBook"> </a>
 
@@ -170,29 +136,25 @@ userMessageId  | Integer                        | O           | Unique message i
 
 ### Response Fields
 
-Name           | Type(value)                    | Mandatory   | Description
----------------| -------------------------------|-------------|----------------
-type           | subscribed/unsubscribed        | M           | Subscribe/Unsubscribe message type
-channel        | fullOrderBook                  | M           | 
-timestamp      | Long                           | M           | When the subscription was accepted
-instrumentIds  | Array of instrumentId Strings  | M           | 
-userMessageId  | Integer                        | (M)         | Mandatory if userMessageId is provided in the user request
+Name           | Type(value)                         | Mandatory   | Description
+---------------| ------------------------------------|-------------|----------------
+type           | subscribed/unsubscribed             | M           | Subscribe/Unsubscribe message type
+channel        | fullOrderBook                       | M           | 
+timestamp      | Long                                | M           | When the subscription was accepted
+instrumentId   | instrumentId String                 | M           | 
+bids           | Array of [price, size, orderId]     | M           | Snapshot of buy orders
+asks           | Array of [price, size, orderId]     | M           | Snapshot of sell orders
+userMessageId  | Integer                             | (M)         | Mandatory if userMessageId is provided in the user request
 
 ### Channel Fields
 
-Name           | Type(value)     | Mandatory   | Description
----------------| ----------------|-------------|-------------
-type           | fullOrderBook   | M           |
-timestamp      | Long            | M           | order book update time
-instrumentId   | String          | M           | 
-orderId        | String          | M           | 
-price          | DoubleString    | M           | 
-remainingSize  | DoubleString    | M           | 
-side           | Enum            | M           |
-sequence       | Long            | M           | 
-
-The first fullOrderBook bids and asks contain the full depth that the user
-subscribes for. The subsequent messages only contain the updates only.
+Name           | Type(value)                         | Mandatory   | Description
+---------------| ------------------------------------|-------------|-------------
+type           | fullOrderBook                       | M           |
+timestamp      | Long                                | M           | order book update time
+instrumentId   | String                              | M           | 
+bids           | Array of [price, size, orderId]     | M           | Update of buy orders
+asks           | Array of [price, size, orderId]     | M           | Update of sell orders
 
 <a name="trade" id="trade"> </a>
 
@@ -273,35 +235,33 @@ Name            | Type(value)                    | Mandatory   | Description
 type            | subscribe/unsubscribe          | M           | Subscribe/Unsubscribe message type
 channel         | charts                         | M           | 
 instrumentIds   | Array of instrumentId Strings  | M           | 
+interval        | Integer                        | M           | 
 userMessageId   | Integer                        | O           | Unique message id for this websocket session
 
 
 ### Response Fields
 
-Name            | Type(value)                    | Mandatory   | Description
-----------------| -------------------------------|-------------|-------------
-type            | subscribed/unsubscribe         | M           | Subscribe/Unsubscribe message type
-channel         | charts                         | M           | 
-timestamp       | Long                           | M           | When the subscription request was accepted
-instrumentIds   | Array of instrumentId Strings  | M           | 
-userMessageId   | Integer                        | (M)         | Mandatory if userMessageId is provided in the user request
+Name            | Type(value)                                                       | Mandatory   | Description
+----------------| ------------------------------------------------------------------|-------------|-------------
+type            | subscribed/unsubscribed                                           | M           | Subscribe/Unsubscribe message type
+channel         | charts                                                            | M           | 
+timestamp       | Long                                                              | M           | When the subscription request was accepted
+instrumentId    | String                                                            | M           | 
+interval        | Integer                                                           | M           |
+userMessageId   | Integer                                                           | (M)         | Mandatory if userMessageId is provided in the user request
+records         | Array of [startTime,open,close,low,high,volume] | M           | 
 
+The first charts message will contain the array of historical data
+entries with the maximum size of 300.
 
 ### Channel Fields
 
-Name          | Type(value)   | Mandatory   | Description
---------------| --------------|-------------|-------------
-type          | charts        | M           | 
-timestamp     | Long          | M           | Chart update time
-instrumentId  | String        | M           | 
-startTime     | Long          | M           | 
-openPrice     | String        | M           | 
-closePrice    | String        | M           | 
-low           | String        | M           | 
-high          | String        | M           | 
-volume        | String        | M           | 
+Name          | Type(value)                                              | Mandatory   | Description
+--------------| ---------------------------------------------------------|-------------|-------------
+type          | charts                                                   | M           | 
+timestamp     | Long                                                     | M           | Chart update time
+instrumentId  | String                                                   | M           | 
+interval      | Integer                                                  | M           |
+update        | [startTime,open,close,low,high,volume] | M           |
 
-
-The first charts message will contain the array of historical data
-entries with the size of 60.
 
