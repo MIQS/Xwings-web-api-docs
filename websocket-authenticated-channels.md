@@ -2,8 +2,6 @@
 * [Authenticate](#authenticate)
 * [Order Update](#orderUpdate)
 * [Account Update](#accountUpdate)
-* [New Order](#newOrder)
-* [Cancel Order](#cancelOrder)
 
 In order to receive the data on authenticated channels, the websocket session needs to be authenticated first
 by calling authenticate.
@@ -128,41 +126,3 @@ balances          | Array of account balances (asset, balance, availableBalance)
 referenceId       | String                                                                    | M           | NEW_ORDER-orderId; TRADE-tradeId; PENDING_WITHDRAW-withdrawId; TRANSFER-txId
 
 
-<a name="newOrder" id="newOrder"> </a>
-
----
-## New Order
-
-### Request Fields
-
-Name                   | Type(value)          | Mandatory   | Description
------------------------| ---------------------|-------------|-----------------------
-type                   | newOrder             | M           | 
-timestamp              | Long                 | M           | current time in milliseconds from UNIX EPOCH
-instrumentId           | String               | M           | 
-orderType              | Enum                 | M           | Limit/Market/Stop/StopLimit
-price                  | DoubleString         | (M)         | Mandatory if order is non Market order
-size                   | DoubleString         | (M)         | Mandatory if order is non Market order;For Market order, the user can either provide size or amount in quote asset
-amount                 | DoubleString         | O           | Amount in quote asset to buy/sell
-side                   | Enum                 | M           |
-timeInForce            | Enum                 | M           |
-clientOrderId          | String               | O           | 
-stopPrice              | NumberString         | (M)         | Mandatory if orderType is Stop or StopLimit
-postOnly               | Boolean              | O           | Default to false. If any part of the order results in taking liquidity, the order will be rejected and no part of it will execute.
-selfTradePrevention    | Enum                 | O           | Decrease and cancel (Default);Cancel oldest;Cancel newest;Cancel both;
-userMessageId          | Integer              | O           | Unique message id for this websocket session
-
-<a name="cancelOrder" id="cancelOrder"> </a>
-
----
-## Cancel Order
-
-### Request Fields
-
-Name                   | Type(value)          | Mandatory   | Description
------------------------| ---------------------|-------------|--------------------
-type                   | cancelOrder          | M           | 
-timestamp              | Long                 | M           | current time in milliseconds from UNIX EPOCH
-orderId                | String               | (M)         | 
-clientOrderId          | String               | (M)         | 
-userMessageId          | Integer              | O           | Unique message id for this websocket session
