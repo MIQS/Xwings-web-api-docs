@@ -235,7 +235,7 @@ Name            | Type(value)                    | Mandatory   | Description
 type            | subscribe/unsubscribe          | M           | Subscribe/Unsubscribe message type
 channel         | charts                         | M           | 
 instrumentIds   | Array of instrumentId Strings  | M           | 
-interval        | Integer                        | M           | 
+granularity     | Integer                        | M           | 
 userMessageId   | Integer                        | O           | Unique message id for this websocket session
 
 
@@ -247,7 +247,7 @@ type            | subscribed/unsubscribed                                       
 channel         | charts                                                            | M           | 
 timestamp       | Long                                                              | M           | When the subscription request was accepted
 instrumentId    | String                                                            | M           | 
-interval        | Integer                                                           | M           |
+granularity     | Integer                                                           | M           |
 userMessageId   | Integer                                                           | (M)         | Mandatory if userMessageId is provided in the user request
 records         | Array of [startTime,open,close,low,high,volume] | M           | 
 
@@ -261,7 +261,7 @@ Name          | Type(value)                                              | Manda
 type          | charts                                                   | M           | 
 timestamp     | Long                                                     | M           | Chart update time
 instrumentId  | String                                                   | M           | 
-interval      | Integer                                                  | M           |
+granularity   | Integer                                                  | M           |
 update        | [startTime,open,close,low,high,volume] | M           |
 
 

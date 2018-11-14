@@ -18,6 +18,7 @@ QUOTE_AMOUNT_REQUIRED                   | The orderType is MARKET and side is BU
 SIZE_REQUIRED                           | The orderType is MARKET and side is SELL but size is not provided.
 PRICE_LESS_THAN_MIN_PRICE               | The order price is less than the minOrderPrice of the instrument.
 PRICE_MORE_THAN_MAX_PRICE               | The order price is more than the maxOrderPrice of the instrument.
+PENDING_BALANCE_ADJUSTMENT              | Pending balance adjustment from previous order or account action.
 API_BAD_REQUEST,                        | Bad request that contains either invalid fields or invalid field values
 INTERNAL_SERVER_ERROR,                  | Internal server error.
 API_CALL_UNAUTHORIZED,                  | The api call is not authenticated.
@@ -34,7 +35,9 @@ USER_REGISTRATION_HAS_BEEN_CONFIRMED,   | The user has been confirmed already.
 USER_DISABLED,                          | The user is disabled.
 USER_AUTH_BAD_CREDENTIALS,              | The credentials provided by user is invalid.
 PASSWORD_SAME_TO_PREVIOUS,              | Cannot set the password same to previous.
-USER_NOT_EXIST,                         | Can't find the user with the auth token.
+USER_NOT_EXIST,                         | User not exist.
+TWO_FACTOR_AUTH_NOT_ACTIVATED,          | Must activate two factor auth to proceed two factor actions.
+TWO_FACTOR_AUTH_HAS_ACTIVATED,          | Two factor auth has been activated, please don't do it again.
 INVALID_USERACCOUNT_NAME_FORMAT,        | The user account name provided by user is invalid.
 USERACCOUNT_NAME_IN_USE,                | The user account name has been taken.
 USER_MAIN_ACCOUNT_DELETE_NOT_ALLOWED,   | Cannot delete the user main account.
@@ -45,7 +48,16 @@ USERACCOUNT_NOT_EXIST,                  | Can't find the user account with the p
 APIKEY_NOT_EXIST,                       | Cannot find the apikey with the provided credentials.
 APIKEY_DISABLED,                        | The apikey is disabled.
 BAD_PASSCODE,                           | The apikey passcode is invalid.
-INVALID_AUTHORITIES                     | The apikey authorities is invalid.
-
-
+INVALID_AUTHORITIES                     | The authorities is invalid.
+INVALID_TWO_FACTOR_AUTHORIZATION        | Invalid two factor authentication.
+INVALID_INSTRUMENT_ID                   | The instrument id is invalid.
+INSTRUMENT_INACTIVED                    | The instrument id in inactivated.
+INVALID_TWO_FACTOR_CODE                 | Invalid two factor authentication code.
+INVALID_RESET_PASSWORD_LINK             | The reset password link is expired or invalid.
+EXCEED_MAX_WITHDRAWAL_LIMIT_PER_DAY     | Exceed max withdrawal limit per day.
+EXCEED_MAX_WITHDRAWAL_LIMIT             | Exceed max withdrawal limit.
+WITHDRAW_AMOUNT_TOO_SMALL               | Less than min withdraw limit.
+WITHDRAW_ID_NOT_EXIST                   | Cancel withdraw request withdraw id not exist.
+WITHDRAW_ALREADY_PROCESSED              | Cancel withdraw request but withdraw already not pending status.
+INVALID_ASSET                           | Invalid asset.
 

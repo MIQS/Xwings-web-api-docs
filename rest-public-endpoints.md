@@ -135,7 +135,6 @@ It returns an array of data point stats.
 Name          | Type(value)     | Mandatory   | Description
 --------------| ----------------|-------------|-----------------------
 instrumentId  | String          | M           | 
-startTime     | Long            | M           | Seconds since Unix Epoch
 endTime       | Long            | M           | Seconds since Unix Epoch
 granularity   | Integer         | M           | In seconds; 60/300/900/3600/21600/86400;The combination of startTime, endTime and granularity determines how many data points obtained. The maximum supported number of data points is xxx
 
